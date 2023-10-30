@@ -1,24 +1,14 @@
-//adding custom event emitter to the object constructor
+var fs = require("fs");
+/*
+//sync process
+var data = fs.readFileSync("readMe.txt", "utf8"); //it will first read all the things underneath the file before moving to further code
+//we deal with binary data for reading files so we pass the charincode
+fs.writeFileSync("writeMe.txt", data);
+*/
 
-var events = require("events");
-var util = require("util");
-
-var Person = function (name) {
-  this.name = name;
-};
-
-util.inherits(Person, events.EventEmitter);
-
-var harsh = new Person("harsh");
-var harshu = new Person("harshu");
-var harshi = new Person("harshi");
-
-var people = [harsh, harshu, harshi];
-
-people.forEach(function (person) {
-  person.on("speak", function (mssg) {
-    console.log(person.name + "says:" + mssg);
+//async
+fs.readFile("readMe.txt", "utf8", function (err, data) {
+  fs.writeFile("writeMe.txt", data, function (err) {
+    console.log("the data is written");
   });
 });
-
-harsh.emit("speak", "hello");
