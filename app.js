@@ -1,14 +1,28 @@
 var fs = require("fs");
 /*
-//sync process
-var data = fs.readFileSync("readMe.txt", "utf8"); //it will first read all the things underneath the file before moving to further code
-//we deal with binary data for reading files so we pass the charincode
-fs.writeFileSync("writeMe.txt", data);
+//delete the file or directory
+fs.unlink("writeMe.txt", function (err) {
+  console.log("file is deleted");
+});
 */
-
-//async
-fs.readFile("readMe.txt", "utf8", function (err, data) {
-  fs.writeFile("writeMe.txt", data, function (err) {
-    console.log("the data is written");
+/*
+//sync
+fs.mkdirSync("stuff");
+fs.rmdirSync("stuff");
+*/
+/*
+//async CREATING 
+fs.mkdir("stuff", function () {
+  fs.readFile("readMe.txt", "utf8", function (err, data) {
+    fs.writeFile("./stuff/writeMe.txt", data, function (err) {
+      console.log("writeMe file is written in stuff directory");
+    });
+  });
+});
+*/
+//deletion first file in the directory and then the directory itself
+fs.unlink("./stuff/writeMe.txt", function () {
+  fs.rmdir("stuff", function () {
+    console.log("file as well as dir is deleted");
   });
 });
